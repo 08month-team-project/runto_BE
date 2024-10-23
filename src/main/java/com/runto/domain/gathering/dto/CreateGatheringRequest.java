@@ -2,9 +2,11 @@ package com.runto.domain.gathering.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.runto.domain.gathering.domain.Gathering;
 import com.runto.domain.gathering.type.GoalDistance;
 import com.runto.domain.gathering.type.RunningConcept;
 import com.runto.domain.image.dto.GatheringImageUrlDto;
+import com.runto.domain.user.domain.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -45,4 +47,19 @@ public class CreateGatheringRequest {
 
     private GatheringImageUrlDto gatheringImageUrls;
 
+    public Gathering toEntity(User host) {
+
+        return Gathering.builder()
+                .host(host)
+                .title(title)
+                .description(description)
+                .appointedAt(appointedAt)
+                .deadline(deadline)
+                .concept(concept)
+                .goalDistance(goalDistance)
+                .thumbnailUrl(gatheringImageUrls.getThumbnailUrl())
+                .location(location.toLocation())
+                .maxNumber(maxNumber)
+                .build();
+    }
 }
