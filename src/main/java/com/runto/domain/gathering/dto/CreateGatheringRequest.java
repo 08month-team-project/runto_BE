@@ -7,6 +7,7 @@ import com.runto.domain.gathering.type.GoalDistance;
 import com.runto.domain.gathering.type.RunningConcept;
 import com.runto.domain.image.dto.GatheringImageUrlDto;
 import com.runto.domain.user.domain.User;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class CreateGatheringRequest {
     @NotNull(message = "지원마감날짜는 필수값입니다.")
     private LocalDateTime deadline; // 모집마감 날짜시각
 
+    @Valid
     @NotNull(message = "약속장소는 필수값입니다.")
     private LocationDto location;
 
@@ -45,6 +47,7 @@ public class CreateGatheringRequest {
     @NotNull(message = "목표 km 를 설정해야합니다.")
     private RunningConcept concept;
 
+    @Valid
     private GatheringImageUrlDto gatheringImageUrls;
 
     public Gathering toEntity(User host) {
