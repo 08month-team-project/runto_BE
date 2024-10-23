@@ -1,9 +1,11 @@
 package com.runto.domain.gathering.domain;
 
 import com.runto.domain.common.BaseTimeEntity;
+import com.runto.domain.gathering.exception.GatheringException;
 import com.runto.domain.gathering.type.GatheringStatus;
 import com.runto.domain.gathering.type.GoalDistance;
 import com.runto.domain.gathering.type.RunningConcept;
+import com.runto.domain.image.domain.GatheringImage;
 import com.runto.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,8 +13,11 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.runto.domain.gathering.type.GatheringStatus.NORMAL;
+import static com.runto.global.exception.ErrorCode.*;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -21,6 +26,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "gathering_type")
+@Table(name = "gatherings")
 @Entity
 public class Gathering extends BaseTimeEntity {
 
@@ -69,6 +75,26 @@ public class Gathering extends BaseTimeEntity {
 
     @Column(name = "current_number", nullable = false)
     private Integer currentNumber;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "gathering", cascade = CascadeType.PERSIST)
+    private List<GatheringImage> contentImages = new ArrayList<>();
+
+
+    // 양방향관계,영속성전이를 통한 저장방식, 엔티티에서 dto를 참조하지 않는 구조를 고려하여 만들었음
+    public void addContentImages(List<GatheringImage> contentImages) {
+        if (contentImages == null || contentImages.size() < 1) {
+            return;
+        }
+        if (contentImages.size() > 3) {
+            throw new GatheringException(IMAGE_SAVE_LIMIT_EXCEEDED);
+        }
+
+        contentImages.forEach(image -> {
+            image.assignGathering(this);
+            this.contentImages.add(image);
+        });
+    }
 
 
     @PrePersist
