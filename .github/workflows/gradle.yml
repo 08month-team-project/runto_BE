@@ -70,8 +70,7 @@ jobs:
           if [ $(sudo docker ps -a -q -f name=runto-cicd) ]; then
             sudo docker stop runto-cicd
           fi
-#       추후 환경변수들을 실행시킬때마다 주입하는방식 말고 다른방식을 찾아보자.
-#      좌 스프링부트 환경변수 이름, 우 GithubAction Secret
+
       - name: docker run new container
         run: |
           sudo docker run --rm -d -p 8080:8080 \
