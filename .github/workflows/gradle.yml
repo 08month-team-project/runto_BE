@@ -73,7 +73,7 @@ jobs:
 
       - name: docker run new container
         run: |
-          sudo docker run --rm -d -p 8080:8080 \
+          sudo docker run --rm -p 8080:8080 \
           -e SPRING_PROFILES_ACTIVE=prod \
           -e "AWS_DB_DRIVER=${{ secrets.AWS_DB_DRIVER }}" \
           -e "AWS_DB_URL=${{ secrets.AWS_DB_URL }}" \
