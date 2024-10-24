@@ -80,7 +80,7 @@ jobs:
           -e "AWS_DB_NAME=${{ secrets.AWS_DB_USERNAME }}" \
           -e "AWS_DB_PASSWORD=${{ secrets.AWS_DB_PASSWORD }}" \
           -e "SECRET_KEY=${{ secrets.SECRET_KEY }}" \
-         ${{ secrets.DOCKERHUB_USERNAME }}/runto-cicd:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/runto-cicd:latest
 
       - name: delete old docker image
         run: sudo docker system prune -f
