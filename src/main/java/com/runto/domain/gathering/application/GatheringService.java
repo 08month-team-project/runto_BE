@@ -5,7 +5,7 @@ import com.runto.domain.gathering.dao.GatheringRepository;
 import com.runto.domain.gathering.domain.Gathering;
 import com.runto.domain.gathering.dto.CreateGatheringRequest;
 import com.runto.domain.image.domain.GatheringImage;
-import com.runto.domain.image.dto.ContentImageUrlDto;
+import com.runto.domain.image.dto.ImageUrlDto;
 import com.runto.domain.image.dto.GatheringImageUrlDto;
 import com.runto.domain.user.dao.UserRepository;
 import com.runto.domain.user.domain.User;
@@ -45,7 +45,7 @@ public class GatheringService {
         if(imageUrlDto == null) return;
 
         List<GatheringImage> gatheringImages = imageUrlDto.getContentImageUrls().stream()
-                .map(ContentImageUrlDto::toEntity)
+                .map(ImageUrlDto::toEntity)
                 .toList();
 
         gathering.addContentImages(gatheringImages);

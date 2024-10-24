@@ -60,7 +60,7 @@ public class CreateGatheringRequest {
                 .deadline(deadline)
                 .concept(concept)
                 .goalDistance(goalDistance)
-                .thumbnailUrl(gatheringImageUrls.getThumbnailUrl())
+                .thumbnailUrl(gatheringImageUrls.getThumbnailUrl().getImageUrl())
                 .location(location.toLocation())
                 .maxNumber(maxNumber)
                 .build();
