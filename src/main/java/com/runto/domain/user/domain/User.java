@@ -25,14 +25,10 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, length = 15)
     private String nickname;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
 
     @Column(nullable = false)
     @Enumerated(STRING)
@@ -48,6 +44,9 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "profile_image_url")
     private String profileImageUrl;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private LocalAccount localAccount;
 
     @PrePersist
     public void prePersist() {
